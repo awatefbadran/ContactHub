@@ -15,28 +15,32 @@
 </head>
 
 <body class="bg-light">
-    <nav class="navbar bg-white shadow-sm px-4 py-3">
-        <div class="d-flex align-items-center gap-3">
-            <div class=" text-white rounded-3 p-2" style="background-color: #6433fa;">
-                <i class="fa-solid fa-address-book"></i>
+   <nav class="navbar bg-white shadow-sm px-3 py-2">
+  <div class="container-fluid d-flex flex-wrap align-items-center justify-content-between">
+    
+    <!-- Logo & Title -->
+    <div class="d-flex align-items-center gap-2">
+      <div class="text-white rounded-3 p-2" style="background-color: #6433fa;">
+        <i class="fa-solid fa-address-book"></i>
+      </div>
+      <div class="d-flex flex-column">
+        <h5 class="mb-0 fw-bold m-0" style="font-size: 1rem;">Contact<span style="color: #6433fa;">Hub</span></h5>
+        <small class="text-muted" style="font-size: 0.7rem;">Smart Contact Manager</small>
+      </div>
+    </div>
 
-            </div>
-            <div>
-                <h5 class="mb-0 fw-bold">Contact<span style="color: #6433fa;">Hub</span></h5>
-                <small class="text-muted">Smart Contact Manager</small>
-            </div>
-        </div>
+    <!-- Buttons & Profile -->
+    <div class="d-flex align-items-center gap-2 flex-wrap">
+      <button class="btn rounded-3 px-3 py-1 text-white" style="background-color: #6433fa; font-size: 0.8rem;" onclick="showForm()">
+        <i class="fa-solid fa-plus"></i> Add
+      </button>
+      <i class="fa-solid fa-bell fs-5"></i>
+      <i class="fa-solid fa-gear fs-5"></i>
+      <img src="./imgs/avatar-3.jpg" class="rounded-circle" style="width: 30px; height: 30px;">
+    </div>
 
-        <div class="d-flex align-items-center gap-3">
-            <button class="btn rounded-3 px-4" style="background-color: #6433fa; color:white;" onclick="showForm()">
-                <i class="fa-solid fa-plus"></i> Add Contact
-            </button>
-
-            <i class="fa-solid fa-bell"></i>
-            <i class="fa-solid fa-gear"></i>
-            <img src="./imgs/avatar-3.jpg" class="rounded-circle " style="width: 35px;">
-        </div>
-    </nav>
+  </div>
+</nav>
 
 
     <div class="container my-4">
