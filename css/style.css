@@ -95,3 +95,84 @@
   background-color: #e5e7eb;
 }
 
+.overlay-bg {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.5);
+    z-index: 1000;
+}
+
+
+.overlay-content {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 80%;     
+    max-height: 90vh;
+    overflow-y: auto; 
+    z-index: 1001;
+}
+
+.myCard {
+    padding: 20px;
+    border-radius: 20px;
+}
+
+
+.avatar-circle {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    background-color: #e0e0e0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    margin-bottom: 10px;
+}
+
+.file-upload-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    background-color: #6433fa;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 0.9rem;
+}
+
+.file-upload-btn:hover {
+    background-color: #4a24b8;
+}
+
+@media (max-width: 768px) {
+    .overlay-content {
+        width:100%;  
+    }
+
+    .avatar-circle {
+        width: 60px;
+        height: 60px;
+        font-size: 1.5rem;
+    }
+
+    .file-upload-btn {
+        padding: 4px 8px;
+        font-size: 0.8rem;
+    }
+
+    .form-control, .form-select {
+        font-size: 0.9rem;
+    }
+
+    button.btn {
+        font-size: 0.85rem;
+        padding: 5px 10px;
+    }
+}
