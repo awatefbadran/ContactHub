@@ -15,32 +15,34 @@
 </head>
 
 <body class="bg-light">
-   <nav class="navbar bg-white shadow-sm px-3 py-2">
-  <div class="container-fluid d-flex flex-wrap align-items-center justify-content-between">
-    
-    <!-- Logo & Title -->
-    <div class="d-flex align-items-center gap-2">
-      <div class="text-white rounded-3 p-2" style="background-color: #6433fa;">
-        <i class="fa-solid fa-address-book"></i>
-      </div>
-      <div class="d-flex flex-column">
-        <h5 class="mb-0 fw-bold m-0" style="font-size: 1rem;">Contact<span style="color: #6433fa;">Hub</span></h5>
-        <small class="text-muted" style="font-size: 0.7rem;">Smart Contact Manager</small>
-      </div>
-    </div>
+    <nav class="navbar bg-white shadow-sm px-3 py-2">
+        <div class="container-fluid d-flex flex-wrap align-items-center justify-content-between">
 
-    <!-- Buttons & Profile -->
-    <div class="d-flex align-items-center gap-2 flex-wrap">
-      <button class="btn rounded-3 px-3 py-1 text-white" style="background-color: #6433fa; font-size: 0.8rem;" onclick="showForm()">
-        <i class="fa-solid fa-plus"></i> Add
-      </button>
-      <i class="fa-solid fa-bell fs-5"></i>
-      <i class="fa-solid fa-gear fs-5"></i>
-      <img src="./imgs/avatar-3.jpg" class="rounded-circle" style="width: 30px; height: 30px;">
-    </div>
+            <!-- Logo & Title -->
+            <div class="d-flex align-items-center gap-2">
+                <div class="text-white rounded-3 p-2" style="background-color: #6433fa;">
+                    <i class="fa-solid fa-address-book"></i>
+                </div>
+                <div class="d-flex flex-column">
+                    <h5 class="mb-0 fw-bold m-0" style="font-size: 1rem;">Contact<span
+                            style="color: #6433fa;">Hub</span></h5>
+                    <small class="text-muted" style="font-size: 0.7rem;">Smart Contact Manager</small>
+                </div>
+            </div>
 
-  </div>
-</nav>
+            <!-- Buttons & Profile -->
+            <div class="d-flex align-items-center gap-2 flex-wrap">
+                <button class="btn rounded-3 px-3 py-1 text-white" style="background-color: #6433fa; font-size: 0.8rem;"
+                    onclick="showForm()">
+                    <i class="fa-solid fa-plus"></i> Add
+                </button>
+                <i class="fa-solid fa-bell fs-5"></i>
+                <i class="fa-solid fa-gear fs-5"></i>
+                <img src="./imgs/avatar-3.jpg" class="rounded-circle" style="width: 30px; height: 30px;">
+            </div>
+
+        </div>
+    </nav>
 
 
     <div class="container my-4">
@@ -149,7 +151,7 @@
     <div id="formOverlay" class="d-none">
 
 
-        <div class="overlay-bg" onclick="hideForm()"></div>
+        <div class="overlay-bg"></div>
 
         <div class="overlay-content ">
             <div class="card shadow rounded-4 p-4 position-relative myCard">
@@ -165,9 +167,9 @@
                         </div>
                         <div class="file-upload-wrapper">
                             <label for="imgInput" class="file-upload-btn">
-                              <i class="fa-solid fa-camera"></i>  Choose Image
+                                <i class="fa-solid fa-camera"></i> Choose Image
                             </label>
-                            
+
                             <input type="file" id="imgInput" accept="image/*">
                         </div>
 
@@ -213,12 +215,13 @@
                             <option value="Other">Other</option>
                         </select>
                     </div>
-
-                    <div class="col-md-12 ">
+                    <div class="col-md-12">
                         <label class="form-label d-block mb-2">Type</label>
+
                         <div class="d-flex align-items-center ms-2">
-                            <div class="form-check  ">
-                                <input class="form-check-input favinputs " type="checkbox" name="contactType"
+
+                            <div class="form-check">
+                                <input class="form-check-input favinputs" type="radio" name="contactType"
                                     value="favorite" id="favoriteRadio">
                                 <label class="form-check-label" for="favoriteRadio">
                                     <i class="fa-solid fa-star text-warning me-1"></i>
@@ -226,16 +229,18 @@
                                 </label>
                             </div>
 
-                            <div class="form-check mt-2 ms-2">
-                                <input class="form-check-input favinputs" type="checkbox" name="contactType"
+                            <div class="form-check ms-3">
+                                <input class="form-check-input favinputs" type="radio" name="contactType"
                                     value="emergency" id="emergencyRadio">
                                 <label class="form-check-label" for="emergencyRadio">
                                     <i class="fa-solid fa-heart-pulse text-danger me-1"></i>
                                     Emergency
                                 </label>
                             </div>
+
                         </div>
                     </div>
+
 
                 </div>
 

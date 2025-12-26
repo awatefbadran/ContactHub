@@ -14,6 +14,8 @@ var favoritesnum = document.querySelector(".favorites")
 var emergency = document.querySelector(".emergencys")
 var allProduct = []
 var curruntInput = 0;
+
+// localstorage 
 if (localStorage.getItem("all") != null) {
     allProduct = JSON.parse(localStorage.getItem("all"))
     display()
@@ -32,7 +34,6 @@ function addProduct() {
                 contanerfave = favoriteRadio[i].value
 
             }
-
 
         }
         var product = {
@@ -67,6 +68,7 @@ function addProduct() {
 
     }
 }
+
 function updateTotals() {
     var totalnum = document.querySelectorAll(".total");
     for (var i = 0; i < totalnum.length; i++) {
@@ -158,6 +160,7 @@ function display() {
     }
 }
 function deletepro(i) {
+  // alert for delete
     Swal.fire({
         title: "Are you sure?",
         text: "This contact will be deleted!",
@@ -196,10 +199,10 @@ function updateform(i) {
     emailInput.value = allProduct[i].email
     addressInput.value = allProduct[i].address
     contactGroupInput.value = allProduct[i].contactGroup
-    for (var i = 0; i < favoriteRadio.length; i++) {
-        if (favoriteRadio[i].checked) {
-            contanerfave = favoriteRadio[i].value
-
+     for (var j = 0; j < favoriteRadio.length; j++) {
+        if (favoriteRadio[j].value === allProduct[i].radio) {
+            favoriteRadio[j].checked = true;
+            contanerfave = favoriteRadio[j].value;
         }
     }
     btnAdd.classList.add("d-none")
@@ -210,6 +213,11 @@ function updateform(i) {
 }
 function saveUpdates() {
     if (validationName() && validationphone() && validationemail()) {
+       for (var i = 0; i < favoriteRadio.length; i++) {
+            if (favoriteRadio[i].checked) {
+                contanerfave = favoriteRadio[i].value;
+            }
+        }
         var product = {
             name: FullNameInput.value,
             phone: phoneInput.value,
@@ -238,6 +246,7 @@ function saveUpdates() {
         emer()
     }
 }
+// search by name || email || phone
 function search() {
     var serchInputValue = secrchInput.value
     var cartona = ""
@@ -357,7 +366,7 @@ function emer() {
     }
     emerSection.innerHTML = cartona;
 }
-
+// shaw and hide form
 function showForm() {
     document.getElementById("formOverlay").classList.remove("d-none");
 }
@@ -365,6 +374,7 @@ function showForm() {
 function hideForm() {
     document.getElementById("formOverlay").classList.add("d-none");
 }
+// form validation
 function validationName() {
     var regex = /^[a-zA-Z\u0600-\u06FF ]{2,50}$/;
     var text = FullNameInput.value
