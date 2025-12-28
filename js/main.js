@@ -26,9 +26,30 @@ if (localStorage.getItem("all") != null) {
     updateTotalsemer()
 }
 var contanerfave = "Not selected";
+function isPhoneDuplicated(phone, indexToIgnore = null) {
+    for (var i = 0; i < allProduct.length; i++) {
+        if (allProduct[i].phone === phone) {
+            if (indexToIgnore !== null && i === indexToIgnore) continue;
+            return true;
+        }
+    }
+    return false;
+}
+
+
 function addProduct() {
+  if (isPhoneDuplicated(phoneInput.value)) {
+            Swal.fire({
+                icon: "error",
+                title: "Duplicate Number",
+                text: "This phone number already exists 📞"
+            });
+            phoneInput.classList.add("is-invalid")
+            return;
+        }
     if (validationName() && validationphone() && validationemail()) {
 
+      
         for (var i = 0; i < favoriteRadio.length; i++) {
             if (favoriteRadio[i].checked) {
                 contanerfave = favoriteRadio[i].value
@@ -42,8 +63,7 @@ function addProduct() {
             email: emailInput.value,
             radio: contanerfave,
             address: addressInput.value,
-            contactGroup: contactGroupInput.value,
-            imgInputs: `imgs/${imgInput.files[0]?.name}`
+            contactGroup: contactGroupInput.value
         }
 
         console.log(favoriteRadio);
@@ -94,32 +114,60 @@ function updateTotalsemer() {
     }
     emergency.textContent = emer;
 }
+function getInitials(name) {
+    if (!name) return "";
+    var words = name.trim().split(" ").filter(w => w !== "");
+    var first = words[0]?.charAt(0) || "";
+    var second = words[1]?.charAt(0) || "";
+    return (first + second).toUpperCase();
+}
+
+function toggleStatus(index, status) {
+    if (allProduct[index].radio === status) {
+       
+        allProduct[index].radio = "Not selected";
+    } else {
+       
+        allProduct[index].radio = status;
+    }
+    localStorage.setItem("all", JSON.stringify(allProduct));
+    display();
+    fav();
+    emer();
+    updateTotalsfav();
+    updateTotalsemer();
+}
+
 function display() {
     var container = ""
     for (var i = 0; i < allProduct.length; i++) {
         container += `
-       <div class="card mb-3 shadow-sm p-3 rounded-4">
+    <div class="card mb-3 shadow-sm p-3 rounded-4">
   <div class="d-flex align-items-start gap-3">
-<img style="width:90px"src="${allProduct[i].imgInputs}"/>
+    <!-- Avatar -->
+    <div class="avatar">
+      ${getInitials(allProduct[i].name)}
+    </div>
+
+    <!-- Contact Info -->
     <div class="flex-grow-1">
       <h6 class="mb-1 fw-bold">${allProduct[i].name}</h6>
 
       <div class="d-flex align-items-center text-muted mb-1">
-        <i class="fa-solid fa-phone me-2"></i>
+        <i class="fa-solid fa-phone me-2 text-success"></i>
         ${allProduct[i].phone}
       </div>
 
       <div class="d-flex align-items-center text-muted mb-1">
-        <i class="fa-solid fa-envelope me-2"></i>
+        <i class="fa-solid fa-envelope me-2 text-primary"></i>
         ${allProduct[i].email}
       </div>
 
       <div class="d-flex align-items-center text-muted mb-2">
-        <i class="fa-solid fa-location-dot me-2"></i>
+        <i class="fa-solid fa-location-dot me-2 text-secondary"></i>
         ${allProduct[i].address}
       </div>
 
-    
       <div class="d-flex gap-2">
         <span class="badge bg-success">${allProduct[i].contactGroup}</span>
         <span class="badge bg-danger">${allProduct[i].radio}</span>
@@ -127,33 +175,35 @@ function display() {
     </div>
   </div>
 
- 
+  <!-- Action Buttons -->
   <div class="d-flex justify-content-between align-items-center mt-3 pt-2 border-top">
     <div class="d-flex gap-2">
-      <button class="btn btn-light">
+      <button class="btn btn-light btn-sm rounded-circle">
         <i class="fa-solid fa-phone text-success"></i>
       </button>
-      <button class="btn btn-light">
+      <button class="btn btn-light btn-sm rounded-circle">
         <i class="fa-solid fa-envelope text-primary"></i>
       </button>
     </div>
 
-    <div class="d-flex gap-2">
-      <button class="btn btn-light">
-        <i class="fa-regular fa-star"></i>
-      </button>
-      <button class="btn btn-light text-danger">
-        <i class="fa-solid fa-heart-pulse"></i>
-      </button>
-      <button class="btn btn-light" onclick="updateform(${i})">
-        <i class="fa-solid fa-pen"></i>
-      </button>
-      <button class="btn btn-light text-danger" onclick="deletepro(${i})">
-        <i class="fa-solid fa-trash"></i>
-      </button>
-    </div>
+ <div class="d-flex gap-2">
+  <button class="btn btn-light btn-sm rounded-circle ${allProduct[i].radio === 'favorite' ? 'text-warning' : ''}" onclick="toggleStatus(${i}, 'favorite')">
+    <i class="fa-regular fa-star"></i>
+  </button>
+  <button class="btn btn-light btn-sm rounded-circle ${allProduct[i].radio === 'emergency' ? 'text-danger' : ''}" onclick="toggleStatus(${i}, 'emergency')">
+    <i class="fa-solid fa-heart-pulse"></i>
+  </button>
+  <button class="btn btn-light btn-sm rounded-circle" onclick="updateform(${i})">
+    <i class="fa-solid fa-pen"></i>
+  </button>
+  <button class="btn btn-light btn-sm rounded-circle text-danger" onclick="deletepro(${i})">
+    <i class="fa-solid fa-trash"></i>
+  </button>
+</div>
+
   </div>
 </div>
+
 
     `
         document.getElementById("demo").innerHTML = container
@@ -213,6 +263,8 @@ function updateform(i) {
 }
 function saveUpdates() {
     if (validationName() && validationphone() && validationemail()) {
+      
+        
        for (var i = 0; i < favoriteRadio.length; i++) {
             if (favoriteRadio[i].checked) {
                 contanerfave = favoriteRadio[i].value;
@@ -253,28 +305,32 @@ function search() {
     for (var i = 0; i < allProduct.length; i++) {
         if (allProduct[i].name.toLowerCase().includes(serchInputValue.toLowerCase()) || allProduct[i].email.includes(serchInputValue.toLowerCase()) || allProduct[i].phone.toLowerCase().includes(serchInputValue.toLowerCase())) {
             cartona += `
-          <div class="card mb-3 shadow-sm p-3 rounded-4">
+         <div class="card mb-3 shadow-sm p-3 rounded-4">
   <div class="d-flex align-items-start gap-3">
-<img style="width:90px"src="${allProduct[i].imgInputs}"/>
+    <!-- Avatar -->
+    <div class="avatar">
+      ${getInitials(allProduct[i].name)}
+    </div>
+
+    <!-- Contact Info -->
     <div class="flex-grow-1">
       <h6 class="mb-1 fw-bold">${allProduct[i].name}</h6>
 
       <div class="d-flex align-items-center text-muted mb-1">
-        <i class="fa-solid fa-phone me-2"></i>
+        <i class="fa-solid fa-phone me-2 text-success"></i>
         ${allProduct[i].phone}
       </div>
 
       <div class="d-flex align-items-center text-muted mb-1">
-        <i class="fa-solid fa-envelope me-2"></i>
+        <i class="fa-solid fa-envelope me-2 text-primary"></i>
         ${allProduct[i].email}
       </div>
 
       <div class="d-flex align-items-center text-muted mb-2">
-        <i class="fa-solid fa-location-dot me-2"></i>
+        <i class="fa-solid fa-location-dot me-2 text-secondary"></i>
         ${allProduct[i].address}
       </div>
 
-    
       <div class="d-flex gap-2">
         <span class="badge bg-success">${allProduct[i].contactGroup}</span>
         <span class="badge bg-danger">${allProduct[i].radio}</span>
@@ -282,33 +338,34 @@ function search() {
     </div>
   </div>
 
- 
+  <!-- Action Buttons -->
   <div class="d-flex justify-content-between align-items-center mt-3 pt-2 border-top">
     <div class="d-flex gap-2">
-      <button class="btn btn-light">
+      <button class="btn btn-light btn-sm rounded-circle">
         <i class="fa-solid fa-phone text-success"></i>
       </button>
-      <button class="btn btn-light">
+      <button class="btn btn-light btn-sm rounded-circle">
         <i class="fa-solid fa-envelope text-primary"></i>
       </button>
     </div>
 
     <div class="d-flex gap-2">
-      <button class="btn btn-light">
+      <button class="btn btn-light btn-sm rounded-circle">
         <i class="fa-regular fa-star"></i>
       </button>
-      <button class="btn btn-light text-danger">
+      <button class="btn btn-light btn-sm rounded-circle text-danger">
         <i class="fa-solid fa-heart-pulse"></i>
       </button>
-      <button class="btn btn-light" onclick="updateform(${i})">
+      <button class="btn btn-light btn-sm rounded-circle" onclick="updateform(${i})">
         <i class="fa-solid fa-pen"></i>
       </button>
-      <button class="btn btn-light text-danger" onclick="deletepro(${i})">
+      <button class="btn btn-light btn-sm rounded-circle text-danger" onclick="deletepro(${i})">
         <i class="fa-solid fa-trash"></i>
       </button>
     </div>
   </div>
 </div>
+
     `
             document.getElementById("demo").innerHTML = cartona
         }
@@ -324,6 +381,10 @@ function fav() {
                <div class="card mb-2 p-3 rounded-4 shadow-sm">
   <div class="d-flex align-items-center justify-content-between">
     <div class="d-flex align-items-center gap-3">
+     <div class="avatar">
+      ${getInitials(allProduct[i].name)}
+    </div>
+
       <div>
         <h6 class="mb-0 fw-bold">${allProduct[i].name}</h6>
         <p class="mb-0 text-muted">${allProduct[i].phone}</p>
@@ -346,9 +407,14 @@ function emer() {
     for (var i = 0; i < allProduct.length; i++) {
         if (allProduct[i].radio === "emergency") {
             cartona += `
+            
                <div class="card mb-2 p-3 rounded-4 shadow-sm">
   <div class="d-flex align-items-center justify-content-between">
     <div class="d-flex align-items-center gap-3">
+     <div class="avatar">
+      ${getInitials(allProduct[i].name)}
+    </div>
+
       <div>
         <h6 class="mb-0 fw-bold">${allProduct[i].name}</h6>
         <p class="mb-0 text-muted">${allProduct[i].phone}</p>

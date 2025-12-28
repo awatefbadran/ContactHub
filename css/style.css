@@ -206,3 +206,20 @@
 .overlay-content::-webkit-scrollbar {
   display: none;
 }
+.swal2-container {
+    z-index: 99999 !important;
+}
+.avatar {
+  width: 50px;
+  height: 50px;
+  border-radius: 20%;
+  background: linear-gradient(135deg, #f1841e, #fa7800);
+  color: #fff;
+  font-weight: bold;
+  font-size: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-transform: uppercase;
+  flex-shrink: 0;
+}
